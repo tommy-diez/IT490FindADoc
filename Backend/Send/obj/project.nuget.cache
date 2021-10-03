@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "FyOu9ytMChA9tCZ9xWUhzSuIvGJHFh6I4VR5DSmtfhEi1MFczJgtF3GGpaWMryiK5bF7xA6HlNv/wBF3rjP1Sg==",
+  "success": true,
+  "projectFilePath": "/home/tlr24/Documents/IT490FindADoc/Send/Send.csproj",
+  "expectedPackageFiles": [
+    "/root/.nuget/packages/rabbitmq.client/6.2.2/rabbitmq.client.6.2.2.nupkg.sha512",
+    "/root/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/root/.nuget/packages/system.threading.channels/4.7.1/system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}
