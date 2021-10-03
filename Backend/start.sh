@@ -1,2 +1,5 @@
-sudo systemctl start mono
-systemctl status mono.service 
+#!/usr/bin/bash
+cd Receive
+sudo dotnet run
+cd ../Send
+sudo dotnet run

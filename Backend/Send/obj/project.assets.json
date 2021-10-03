@@ -114,11 +114,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/tlr24/Documents/IT490FindADoc/Send/Send.csproj",
+      "projectUniqueName": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj",
       "projectName": "Send",
-      "projectPath": "/home/tlr24/Documents/IT490FindADoc/Send/Send.csproj",
+      "projectPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/home/tlr24/Documents/IT490FindADoc/Send/obj/",
+      "outputPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"
