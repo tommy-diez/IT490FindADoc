@@ -1,5 +1,3 @@
 #!/usr/bin/bash
-cd Receive
-sudo dotnet run
-cd ../Send
-sudo dotnet run
+sudo systemctl start mono-xsp4.service
+systemctl status mono-xsp4.service
