@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 #declaring array of addresses:ports and standarize variables
-declare -a arr=("172.26.96.163 8080" "172.26.224.180 5432" "172.26.192.203 5672" "172.26.169.103 5672" "172.26.71.194 5000")
+declare -a arr=("172.26.96.163 8081" "172.26.224.180 5432" "172.26.192.203 5672" "172.26.169.103 5672" "172.26.71.194 5000")
 pass="Findadoc!"
 
 #loop through the array and send it to the variable ipPort
