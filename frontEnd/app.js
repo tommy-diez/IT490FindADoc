@@ -12,11 +12,15 @@ app.listen(5000, function() {
 });
 
 app.get("/", function(req, res) {
-	res.send("Hello World" + "\n");
+	res.sendFile(__dirname + "/html/login.html");
 });
 
 app.get("/register", function(req, res) {
 	res.sendFile(__dirname + "/html/register.html");
+})
+
+app.get("/login", function(req, res) {
+	res.sendFile(__dirname + "/html/login.html");
 })
 
 app.post("/", function(req, res) {
