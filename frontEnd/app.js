@@ -12,24 +12,52 @@ app.listen(5000, function() {
 });
 
 app.get("/", function(req, res) {
-	res.send("Hello World" + "\n");
+	res.sendFile(__dirname + "/html/login.html");
 });
 
 app.get("/register", function(req, res) {
 	res.sendFile(__dirname + "/html/register.html");
 })
 
+app.get("/login", function(req, res) {
+	res.sendFile(__dirname + "/html/login.html");
+})
+
 app.post("/", function(req, res) {
-//	sender.send()
+
 	if (req.body.postType === "register") {
+
 		let firstName = req.body.firstName;
 		let lastName = req.body.lastName;
 		let email = req.body.email;
 		let password = req.body.password;
-		console.log("Hi " + firstName + " " + lastName+ " your email is " + email);
-		console.log(req.body);
-	} else {
-		console.log("Registration failed");
+
+		let newUser = {
+			firstName: firstName,
+			lastName: lastName,
+			email: email,
+			password: password,
+		}
+
+		const payloadAsString = JSON.stringify(newUser);
+		sender.send(payloadAsString);
+
 	}
+
+	if(req.body.postType === "login") {
+
+		let email = req.body.email;
+		let password = req.body.password;
+
+		let login = {
+			email: email,
+			password: password
+		}
+
+		const payloadAsString = JSON.stringify(login);
+		sender.send(payloadAsString);
+
+	}
+
 });
 
