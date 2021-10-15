@@ -24,16 +24,40 @@ app.get("/login", function(req, res) {
 })
 
 app.post("/", function(req, res) {
-//	sender.send()
+
 	if (req.body.postType === "register") {
+
 		let firstName = req.body.firstName;
 		let lastName = req.body.lastName;
 		let email = req.body.email;
 		let password = req.body.password;
-		console.log("Hi " + firstName + " " + lastName+ " your email is " + email);
-		console.log(req.body);
-	} else {
-		console.log("Registration failed");
+
+		let newUser = {
+			firstName: firstName,
+			lastName: lastName,
+			email: email,
+			password: password,
+		}
+
+		const payloadAsString = JSON.stringify(newUser);
+		sender.send(payloadAsString);
+
 	}
+
+	if(req.body.postType === "login") {
+
+		let email = req.body.email;
+		let password = req.body.password;
+
+		let login = {
+			email: email,
+			password: password
+		}
+
+		const payloadAsString = JSON.stringify(login);
+		sender.send(payloadAsString);
+
+	}
+
 });
 
