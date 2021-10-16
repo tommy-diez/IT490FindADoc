@@ -11,7 +11,8 @@ app.set('view engine', 'hbs');
 
 app.engine('hbs', handlebars({
 	layoutsDir: __dirname + "/html/views/layouts",
-	extname: 'hbs'
+	extname: 'hbs',
+	partialsDir: __dirname + "/html/views/partials"
 }));
 
 app.use(express.static('css'));
@@ -21,15 +22,18 @@ app.listen(5000, function() {
 });
 
 app.get("/", function(req, res) {
-	res.sendFile(__dirname + "/html/login.html");
+	//res.sendFile(__dirname + "/html/login.html");
+	res.render( __dirname + '/html/views/main', {layout: 'index'});
 });
 
 app.get("/register", function(req, res) {
-	res.sendFile(__dirname + "/html/register.html");
+	//res.sendFile(__dirname + "/html/register.html");
+	res.render( __dirname + '/html/views/register', {layout: 'index'});
 })
 
 app.get("/login", function(req, res) {
-	res.sendFile(__dirname + "/html/login.html");
+	//res.sendFile(__dirname + "/html/login.html");
+	res.render( __dirname + '/html/views/main', {layout: 'index'});
 })
 
 app.post("/", function(req, res) {
