@@ -3,9 +3,18 @@
 const express = require('express'); 
 const sender = require('./sender');
 const bodyParser = require('body-parser');
-
+const handlebars = require('express-handlebars');
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'hbs');
+
+app.engine('hbs', handlebars({
+	layoutsDir: __dirname + "/html/views/layouts",
+	extname: 'hbs'
+}));
+
+app.use(express.static('css'));
 
 app.listen(5000, function() {
 	console.log("Server is configured on port 5000"); 
