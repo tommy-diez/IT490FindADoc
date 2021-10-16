@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row">
-        <h1>Welcome, register for FindADoc below</h1>
-    </div>
+    {{#if didntMatch }}
+        {{> failed-registration-header }}
+    {{/if}}
     <br>
     <div class="row">
         <div class="col">
@@ -21,6 +21,10 @@
                 <div class="mb-3">
                     <label class="form-label" for="password">Password :</label>
                     <input name="password" class="form-control" type="password" id="password">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="confirmPassword">Password :</label>
+                    <input name="confirmPassword" class="form-control" type="password" id="confirmPassword">
                 </div>
                 <button name="postType" value="register" type="submit" class="btn btn-primary">Submit</button>
             </form>

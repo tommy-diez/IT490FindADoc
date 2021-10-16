@@ -22,17 +22,14 @@ app.listen(5000, function() {
 });
 
 app.get("/", function(req, res) {
-	//res.sendFile(__dirname + "/html/login.html");
 	res.render( __dirname + '/html/views/main', {layout: 'index'});
 });
 
 app.get("/register", function(req, res) {
-	//res.sendFile(__dirname + "/html/register.html");
 	res.render( __dirname + '/html/views/register', {layout: 'index'});
 })
 
 app.get("/login", function(req, res) {
-	//res.sendFile(__dirname + "/html/login.html");
 	res.render( __dirname + '/html/views/main', {layout: 'index'});
 })
 
@@ -44,17 +41,24 @@ app.post("/", function(req, res) {
 		let lastName = req.body.lastName;
 		let email = req.body.email;
 		let password = req.body.password;
+		let confirmPassword = req.body.confirmPassword;
 
-		let newUser = {
-			firstName: firstName,
-			lastName: lastName,
-			email: email,
-			password: password,
+		if(confirmPassword !== password) {
+			console.log("passwords do not match");
+			res.render(__dirname + '/html/views/register', {layout: 'index', didntMatch: true});
+
+		} else {
+
+			let newUser = {
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+				password: password,
+			}
+
+			const payloadAsString = JSON.stringify(newUser);
+			sender.send(payloadAsString);
 		}
-
-		const payloadAsString = JSON.stringify(newUser);
-		sender.send(payloadAsString);
-
 	}
 
 	if(req.body.postType === "login") {
