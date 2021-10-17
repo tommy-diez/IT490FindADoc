@@ -42,6 +42,7 @@ app.post("/", function(req, res) {
 		let email = req.body.email;
 		let password = req.body.password;
 		let confirmPassword = req.body.confirmPassword;
+		let insuranceId = req.body.insuranceId;
 
 		if(confirmPassword !== password) {
 			console.log("passwords do not match");
@@ -54,6 +55,7 @@ app.post("/", function(req, res) {
 				lastName: lastName,
 				email: email,
 				password: password,
+				insuranceId: insuranceId
 			}
 
 			const payloadAsString = JSON.stringify(newUser);
