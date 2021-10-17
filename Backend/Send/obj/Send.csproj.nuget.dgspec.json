@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj": {}
+    "/home/findadoc/IT490/IT490FindADoc/Backend/Send/Send.csproj": {}
   },
   "projects": {
-    "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj": {
+    "/home/findadoc/IT490/IT490FindADoc/Backend/Send/Send.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj",
+        "projectUniqueName": "/home/findadoc/IT490/IT490FindADoc/Backend/Send/Send.csproj",
         "projectName": "Send",
-        "projectPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/Send.csproj",
+        "projectPath": "/home/findadoc/IT490/IT490FindADoc/Backend/Send/Send.csproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Send/obj/",
+        "outputPath": "/home/findadoc/IT490/IT490FindADoc/Backend/Send/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/root/.nuget/NuGet/NuGet.Config"
@@ -38,9 +38,17 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.2.2, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
             }
           },
           "imports": [
@@ -58,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/140/sdk/5.0.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/144/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }
