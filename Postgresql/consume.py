@@ -4,22 +4,28 @@ import psycopg2
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('admin', 'Luftwaffe1')))
 channel = connection.channel()
-def connect(fmsg):
+def connect(msg):
 	conn = None
 	try:
-		temp=str(fmsg)
-		msg=temp[1:]
+		#msg=str(msg)
+		#msg=msg[1:]
 		#msg=msg.replace("'", "")
-		msg=msg.replace("\"", "")
-		print('First msg: ',msg)
+		#msg=msg.replace("\"", "")
+		#print('First msg: ',msg)
 
 
 		print('Connecting to DB')
 		conn = psycopg2.connect(host="localhost", database="it490_db", user="postgres", password="password")
 
 		cur = conn.cursor()
-		print(msg)
-		cur.execute(msg)
+		#print(msg)
+		SQL=cur.mogrify(msg)
+		print(SQL)
+		print('^what will be executed^')
+		cur.execute(SQL)
+		conn.commit()
+		print('commit to db, if no db msg will produce error')
+
 		db_msg = cur.fetchone()
 		db_msg=str(db_msg)
 		channel.basic_publish(exchange='amq.direct',routing_key='postgresql',body=db_msg)
