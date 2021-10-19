@@ -2,12 +2,16 @@
 import pika
 import json
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('admin', 'Luftwaffe1')))
-channel = connection.channel()
-connection2 = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('admin', 'Luftwaffe1')))
-channel2 = connection2.channel()
+con_consume = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('admin', 'Luftwaffe1')))
+channel_consume = con_consume.channel()
+con_publish = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('admin', 'Luftwaffe1')))
+channel_publish = con_publish.channel()
+
+def consume_db():
+	channel_consume.basic_consume(queue="postgresqlTOc#backend", on_message_callback=callback_frontend, auto_ack=True)
+
 def send_frontend(msg):
-	channel2.basic_publish(exchange='amq.direct',routing_key='c#TOfe',body=msg)
+	channel_publish.basic_publish(exchange='amq.direct',routing_key='c#TOfe',body=msg)
 	print("sent to frontend")
 
 def callback_frontend(ch, method, properties, body):
@@ -30,20 +34,18 @@ def send(fmsg):
 		lastName = json_msg["lastName"]
 		query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{password}', 1)"
 	else:
-		query = f"SELECT * FROM public.users WHERE email={email} AND password={password}"
+		query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
 		
-	channel.basic_publish(exchange='amq.direct',routing_key='c#TOdb',body=query)
+	channel_publish.basic_publish(exchange='amq.direct',routing_key='c#TOdb',body=query)
 	print("Sent: " + query)
 	#exec(open("send.py").read())
-	channel2.basic_consume(queue="postgresqlTOc#backend", on_message_callback=callback_frontend, auto_ack=True)
-	channel2.start_consuming()
-	
+	consume_db()
 
 
 def callback(ch, method, properties, body):
 	print(f'{body} is received')
 	send(body)
 
-channel.basic_consume(queue="nodejsTOc#backend", on_message_callback=callback, auto_ack=True)
+channel_consume.basic_consume(queue="nodejsTOc#backend", on_message_callback=callback, auto_ack=True)
 
-channel.start_consuming()
+channel_consume.start_consuming()
