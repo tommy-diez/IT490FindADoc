@@ -5,6 +5,7 @@ const sender = require('./sender');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const app = express();
+const consumer = require('./consumer');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
@@ -60,6 +61,9 @@ app.post("/", function(req, res) {
 
 			const payloadAsString = JSON.stringify(newUser);
 			sender.send(payloadAsString);
+			if(consumer.consume()) {
+				res.send("Account created");
+			}
 		}
 	}
 
@@ -75,8 +79,6 @@ app.post("/", function(req, res) {
 
 		const payloadAsString = JSON.stringify(login);
 		sender.send(payloadAsString);
-
 	}
-
-});
+})
 
