@@ -114,11 +114,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/tlr24/Documents/IT490FindADoc/Backend/Receive/Receive.csproj",
+      "projectUniqueName": "/home/findadoc/IT490/IT490FindADoc/Backend/Receive/Receive.csproj",
       "projectName": "Receive",
-      "projectPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Receive/Receive.csproj",
+      "projectPath": "/home/findadoc/IT490/IT490FindADoc/Backend/Receive/Receive.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/home/tlr24/Documents/IT490FindADoc/Backend/Receive/obj/",
+      "outputPath": "/home/findadoc/IT490/IT490FindADoc/Backend/Receive/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"
