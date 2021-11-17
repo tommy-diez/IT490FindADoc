@@ -2,9 +2,9 @@
 import pika
 import json
 
-con_consume = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
+con_consume = pika.BlockingConnection(pika.ConnectionParameters('172.26.83.6', 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
 channel_consume = con_consume.channel()
-con_publish = pika.BlockingConnection(pika.ConnectionParameters('172.26.169.103', 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
+con_publish = pika.BlockingConnection(pika.ConnectionParameters('172.26.83.6', 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
 channel_publish = con_publish.channel()
 
 def consume_db():
