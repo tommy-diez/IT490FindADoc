@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const app = express();
 const consumer = require('./consumer');
+const ping = require('ping');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
@@ -34,7 +35,13 @@ app.get("/login", function(req, res) {
 	res.render( __dirname + '/html/views/main', {layout: 'index'});
 })
 
+app.get("/landing", function(req, res) {
+	res.render(__dirname + "/html/views/landing", {layout: 'index'});
+})
+
 app.post("/", function(req, res) {
+
+	setInterval(consume, 30000);
 
 	if (req.body.postType === "register") {
 
@@ -46,7 +53,7 @@ app.post("/", function(req, res) {
 		let insuranceId = req.body.insuranceId;
 
 		if(confirmPassword !== password) {
-			console.log("passwords do not match");
+			console.log("Passwords do not match");
 			res.render(__dirname + '/html/views/register', {layout: 'index', didntMatch: true});
 
 		} else {
@@ -61,9 +68,13 @@ app.post("/", function(req, res) {
 
 			const payloadAsString = JSON.stringify(newUser);
 			sender.send(payloadAsString);
+			/*
 			if(consumer.consume()) {
 				res.send("Account created");
+			} else {
+				res.send("Error occurred during registration")
 			}
+			 */
 		}
 	}
 
@@ -79,6 +90,35 @@ app.post("/", function(req, res) {
 
 		const payloadAsString = JSON.stringify(login);
 		sender.send(payloadAsString);
+		/*
+		if(consumer.consume()) {
+			res.render(__dirname + '/html/views/landing', {layout: 'index'});
+		} else {
+			res.render(__dirname + '/html/views/main', {layout: 'index', failedLogin: true})
+		}
+		 */
 	}
-})
+});
 
+function consume() {
+	let nodes = ['172.26.169.103', '172.26.30.225', '172.26.83.6'];
+	for(let node of nodes) {
+		ping.sys.probe(node, function(isAlive){
+			if(isAlive) {
+				consumer.consume(node);
+			}
+
+		});
+	}
+	/*
+	nodes.forEach(function(node){
+		ping.sys.probe(node, function(isAlive){
+			if(isAlive) {
+				console.log(node);
+				consumer.consume(node);
+			}
+		});
+	});
+
+	 */
+}
