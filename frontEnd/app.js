@@ -5,7 +5,7 @@ const sender = require('./sender');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const app = express();
-const consumer = require('./consumer');
+//const consumer = require('./consumer');
 const ping = require('ping');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,7 +41,7 @@ app.get("/landing", function(req, res) {
 
 app.post("/", function(req, res) {
 
-	setInterval(consume, 30000);
+//	setInterval(consume, 30000);
 
 	if (req.body.postType === "register") {
 
@@ -90,6 +90,7 @@ app.post("/", function(req, res) {
 
 		const payloadAsString = JSON.stringify(login);
 		sender.send(payloadAsString);
+		res.render(__dirname + "/html/views/landing", {layout: 'index'});
 		/*
 		if(consumer.consume()) {
 			res.render(__dirname + '/html/views/landing', {layout: 'index'});
@@ -99,7 +100,7 @@ app.post("/", function(req, res) {
 		 */
 	}
 });
-
+/*
 function consume() {
 	let nodes = ['172.26.169.103', '172.26.30.225', '172.26.83.6'];
 	for(let node of nodes) {
@@ -121,4 +122,4 @@ function consume() {
 	});
 
 	 */
-}
+
