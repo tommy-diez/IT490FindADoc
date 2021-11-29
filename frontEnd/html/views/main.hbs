@@ -1,4 +1,7 @@
 {{> login-header }}
+{{#if failedLogin}}
+    {{> failed-login-header }}
+{{/if}}
 <div class="row">
     <div class="col">
         <form action="/" method="POST">
@@ -18,3 +21,4 @@
     </div>
 </div>
 </div>
+
