@@ -26,6 +26,7 @@ print(r.status_code)
 
 names = soup.select('div.search-results > div > div > strong > a')
 officeNames = soup.select('div.search-results > div > div > address > strong')
+#specialties = soup.select('div.search-results > div > div > div > ul > li')
 phoneNumbers = soup.select('div.search-results > div > div > address > div > span')
 addresses = soup.select('div.search-results > div > div > address')
 addressList = []
@@ -33,25 +34,35 @@ for e in range(len(addresses)):
 	addresses[e] = addresses[e].getText().replace('\t', '').split('\n')
 	innerAddressList = []
 	for j in range(len(addresses[e])):
-		if (j == 0 or j == 1):
+		#print(str(j) + " " + addresses[e][j])
+		if (j == 0 or j == 1 or j == 3):
 			continue;
-		elif (addresses[e][j] == '' or addresses[e][j].startswith(" ") or addresses[e][j].startswith("Phone:") or addresses[e][j].endswith("miles") or addresses[e][j].endswith("County")):
-			continue;
+		elif (len(innerAddressList) == 2):
+			addressList.append(innerAddressList);
+			break;
 		else:
 			innerAddressList.append(addresses[e][j])
-
-		if (len(innerAddressList) == 3):
-			addressList.append(innerAddressList);
-			continue;
+'''		
+print(len(specialties))
+for s in range(len(specialties)):
+	#print(specialties[s].string)
+	print("TEST #" + str(s) + ": " + str(specialties[s].string))
+	#if (str(specialties[s].string) == 'None'):
+		#temp_list = soup.select_one('div.search-results:nth-child(' + str(s) + ') > div > div > div > ul > li > a')
+		#print(type(temp_list))
+		#specialties[s] = temp_list.string
+		#print(temp_list)
+'''
 			
 #print(addressList)
 			
-print(len(addresses))
+print(len(addressList))
 for i in range(len(names)):
 	print("\nPerson " + str(i+1))
 	print(names[i].string)
 	print(phoneNumbers[i].string)
 	print(addressList[i])
+	#print(specialties[i].string)
 
 
 save_html(soup.prettify(), 'page.txt')
