@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pika
 import json
+import subprocess
 
 
 while 1:
@@ -38,36 +39,30 @@ while 1:
 				
 				i = json_msg["case"]
 				
-				switch(i) {
-					case 1:
-						email = json_msg["email"]
-						password = json_msg["password"]
-						firstName = json_msg["firstName"]
-						lastName = json_msg["lastName"]
-						insuranceId = json_msg["insuranceId"]
-						query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{password}', '{insuranceId}')"
-						break;
-					case 2:
-						email = json_msg["email"]
-						password = json_msg["password"]
-						query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
-						break;
-					case 3:
-						query = f"";
-						break;
-					case 4:
-						officeId = json_msg['officeId']
-						query = f"SELECT * FROM doctor WHERE off_id='{officeId}'";
-						break;
-					case 5:
-						updatePassword = json_msg["password"]
-						confirmPassword = json_msg["confirmPassword"]
-						updateIns = json_msg["insuranceId"]
-						updateEmail = json_msg["email"]
-						if (updatePassword==confirmPassword):
-							newPassword = updatePassword
-						query = f"UPDATE public.users SET email='{updateEmail}', password='{newPassword}', ins_id='{updateIns}' WHERE email='session variable sent from tom'";
-						break;
+				if case == 1:
+					email = json_msg["email"]
+					password = json_msg["password"]
+					firstName = json_msg["firstName"]
+					lastName = json_msg["lastName"]
+					insuranceId = json_msg["insuranceId"]
+					query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{password}', '{insuranceId}')"
+				elif case == 2:
+					email = json_msg["email"]
+					password = json_msg["password"]
+					query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
+				elif case == 3:
+					query = f""
+				elif case == 4:
+					officeId = json_msg['officeId']
+					query = f"SELECT * FROM doctor WHERE off_id='{officeId}'"
+				elif case == 5:
+					updatePassword = json_msg["password"]
+					confirmPassword = json_msg["confirmPassword"]
+					updateIns = json_msg["insuranceId"]
+					updateEmail = json_msg["email"]
+					if (updatePassword==confirmPassword):
+						newPassword = updatePassword
+					query = f"UPDATE public.users SET email='{updateEmail}', password='{newPassword}', ins_id='{updateIns}' WHERE email='session variable sent from tom'"
 										
 				channel_publish.basic_publish(exchange='amq.direct',routing_key='beTOdbRK',body=query)
 				print("Sent to db: " + query)
