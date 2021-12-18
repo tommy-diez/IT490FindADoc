@@ -12,7 +12,7 @@ while 1:
 		if p:
 			con_consume = pika.BlockingConnection(pika.ConnectionParameters(ip, 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
 			channel_consume = con_consume.channel()
-			con_publish = pika.BlockingConnection(pika.ConnectionParameters(ip, 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
+			con_publish = pika.BlockingConnection(pika.ConnectionParameters('172.26.99.35', 5672, '/', pika.PlainCredentials('findadoc', 'Findadoc!')))
 			channel_publish = con_publish.channel()
 
 			def consume_db():
@@ -37,21 +37,21 @@ while 1:
 				json_msg = json.loads(fmsg)
 				# print(json_msg["email"] + " " + json_msg["password"])
 				
-				i = json_msg["case"]
+				case = json_msg["case"]
 				
-				if case == 1:
+				if case == 1: # registration
 					email = json_msg["email"]
 					password = json_msg["password"]
 					firstName = json_msg["firstName"]
 					lastName = json_msg["lastName"]
 					insuranceId = json_msg["insuranceId"]
 					query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{password}', '{insuranceId}')"
-				elif case == 2:
+				elif case == 2: # login
 					email = json_msg["email"]
 					password = json_msg["password"]
 					query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
-				elif case == 3:
-					query = f""
+				elif case == 3: 
+					query = f"SELECT * FROM public.office"
 				elif case == 4:
 					officeId = json_msg['officeId']
 					query = f"SELECT * FROM doctor WHERE off_id='{officeId}'"
