@@ -2,6 +2,7 @@
 import pika
 import json
 import subprocess
+import hashlib
 
 
 while 1:
@@ -41,29 +42,49 @@ while 1:
 				
 				if case == 1: # registration
 					email = json_msg["email"]
-					password = json_msg["password"]
+					password = json_msg["password"].encode('utf-8')
+					#salt = bcrypt.gensalt()
+					#hashed = bcrypt.hashpw(password, salt)
+					#hashed = str(hashed)[1:].replace("'", "")
+					#hash_object = hashlib.md5(password)
+					#hashed = hash_object.hexdigest()
+					hashed = hash(password)
 					firstName = json_msg["firstName"]
 					lastName = json_msg["lastName"]
 					insuranceId = json_msg["insuranceId"]
-					query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{password}', '{insuranceId}')"
+					query = f"INSERT INTO public.users(f_name, l_name, email, password, ins_id) VALUES ('{firstName}', '{lastName}', '{email}', '{hashed}', '{insuranceId}')"
 				elif case == 2: # login
 					email = json_msg["email"]
-					password = json_msg["password"]
-					query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
+					password = json_msg["password"].encode('utf-8')
+					#salt = bcrypt.gensalt()
+					#hashed = bcrypt.hashpw(password, salt)
+					#hashed = str(hashed)[1:].replace("'", "")
+					#hash_object = hashlib.md5(password)
+					#hashed = hash_object.hexdigest()
+					hashed = hash(password)
+					query = f"SELECT f_name, l_name, ins_id FROM public.users WHERE email='{email}' AND password='{hashed}'"
 				elif case == 3: 
+					insuranceId = json_msg["insuranceId"]
+					specialty = json_msg["specialty"]
 					#query = f"SELECT * FROM public.office"
-					query = "SELECT town, zip, state, phone, strt, off_name, doctor.f_name, doctor.l_name FROM office JOIN ON link.ins_id='1' AND link.off_id=office.id JOIN doctor ON doctor.off_id AND doctor.specialty='2'"
+					query = f"SELECT town, zip, state, phone, strt, off_name, doctor.f_name, doctor.l_name FROM public.office JOIN public.link ON link.ins_id='{insuranceId}' AND link.off_id=office.id JOIN public.doctor ON doctor.off_id=office.id AND doctor.specialty='{specialty}'"
 				elif case == 4:
 					officeId = json_msg['officeId']
 					query = f"SELECT * FROM doctor WHERE off_id='{officeId}'"
 				elif case == 5:
-					updatePassword = json_msg["password"]
-					confirmPassword = json_msg["confirmPassword"]
-					updateIns = json_msg["insuranceId"]
-					updateEmail = json_msg["email"]
-					if (updatePassword==confirmPassword):
-						newPassword = updatePassword
-					query = f"UPDATE public.users SET email='{updateEmail}', password='{newPassword}', ins_id='{updateIns}' WHERE email='session variable sent from tom'"
+					oldEmail = json_msg["oldEmail"]
+					updatePassword = json_msg["newPassword"].encode('utf-8')
+					#salt = bcrypt.gensalt()
+					#hashed = bcrypt.hashpw(password, salt)
+					#hashed = str(hashed)[1:].replace("'", "")
+					#hash_object = hashlib.md5(password)
+					#hashed = hash_object.hexdigest()
+					hashed = hash(password)
+					updateIns = json_msg["newInsuranceId"]
+					updateEmail = json_msg["newEmail"]
+					#if (updatePassword==confirmPassword):
+						#newPassword = updatePassword
+					query = f"UPDATE public.users SET email='{updateEmail}', password='{hashed}', ins_id='{updateIns}' WHERE email='{oldEmail}'"
 										
 				channel_publish.basic_publish(exchange='amq.direct',routing_key='beTOdbRK',body=query)
 				print("Sent to db: " + query)
