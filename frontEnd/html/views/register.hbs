@@ -1,7 +1,9 @@
 <div class="container">
+    {{> registration-header }}
     {{#if didntMatch }}
         {{> failed-registration-header }}
     {{/if}}
+
     <br>
     <div class="row">
         <div class="col">
@@ -27,8 +29,11 @@
                     <input name="confirmPassword" class="form-control" type="password" id="confirmPassword">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="insuranceId">Insurance ID# :</label>
-                    <input name="insuranceId" class="form-control" type="text" id="insuranceId">
+                    <label class="form-label" for="policy">Insurance ID# :</label>
+                    <select name="policy" id="policy">
+                        <option value="1">Test 123</option>
+                        <option value="2">Demo 321</option>
+                    </select>
                 </div>
                 <button name="postType" value="register" type="submit" class="btn btn-primary">Submit</button>
             </form>

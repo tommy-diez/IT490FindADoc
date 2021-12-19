@@ -29,7 +29,12 @@
 <section class="white-section" id="features">
 
     <div class="container-fluid">
+        <div class="row">
 
+                <img src="https://cdn.pixabay.com/photo/2020/09/13/20/24/doctor-5569298_1280.png">
+
+        </div>
+        <br>
         <div class="row">
             <div class="feature-box col-lg-4">
                 <i class="icon fas fa-check-circle fa-4x"></i>
@@ -52,16 +57,6 @@
     </div>
 </section>
 
-<!-- Press -->
-
-<section class="colored-section" id="press">
-    <img class="press-logo" src="images/techcrunch.png" alt="tc-logo">
-    <img class="press-logo" src="images/tnw.png" alt="tnw-logo">
-    <img class="press-logo" src="images/bizinsider.png" alt="biz-insider-logo">
-    <img class="press-logo" src="images/mashable.png" alt="mashable-logo">
-
-</section>
-
 <!-- Pricing -->
 
 <section class="white-section" id="pricing">
@@ -73,14 +68,15 @@
         <div class="pricing-column col-lg-4 col-md-6 justify-content-center">
             <div class="card">
                 <div class="card-header">
-                    <h3>Find a Doctor Below</h3>
-                </div>
-                <div class="card-body">
-                    <h2 class="price-text">Free</h2>
-                    <p>Lorem Ipsum</p>
-                    <p>Lorem Ipsum</p>
-                    <p>Lorem Ipsum</p>
-                    <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button>
+                    <h3>Select One of These Doctors</h3>
+                    <form method="POST" action="/">
+                        <select name="specialization" id="spec">
+                            <option value="1">Pediatrician</option>
+                            <option value="2">Dermatology</option>
+                            <option value="3">Cardiology</option>
+                        </select>
+                        <button name="postType" value="case3" type="submit">Find a Doc!</button>
+                    </form>
                 </div>
             </div>
         </div>
