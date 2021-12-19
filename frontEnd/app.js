@@ -128,7 +128,7 @@ app.post("/", function(req, res) {
 	if(req.body.postType === "case3") {
 
 		let specialization = req.body.specialization;
-		let insuranceId = 1;
+		let insuranceId = 15;
 
 		let doctors = {
 			specialty: specialization,
@@ -142,6 +142,26 @@ app.post("/", function(req, res) {
 			console.log(data);
 	})
 
+	}
+
+	if(req.body.postType === "case5") {
+
+		let oldEmail = req.body.oldEmail;
+		let newEmail = req.body.newEmail;
+		let newPassword = req.body.newPassword;
+		let newInsuranceId = req.body.insuranceId;
+
+		let payload = {
+			case: 5,
+			oldEmail: oldEmail,
+			newEmail: newEmail,
+			newPassword: newPassword,
+			newInsuranceId: newInsuranceId
+		}
+
+		let payloadAsString = JSON.stringify(payload);
+		sender.send(payloadAsString);
+		connect();
 	}
 
 });
