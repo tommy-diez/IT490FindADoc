@@ -51,7 +51,8 @@ while 1:
 					password = json_msg["password"]
 					query = f"SELECT f_name, l_name FROM public.users WHERE email='{email}' AND password='{password}'"
 				elif case == 3: 
-					query = f"SELECT * FROM public.office"
+					#query = f"SELECT * FROM public.office"
+					query = "SELECT town, zip, state, phone, strt, off_name, doctor.f_name, doctor.l_name FROM office JOIN ON link.ins_id='1' AND link.off_id=office.id JOIN doctor ON doctor.off_id AND doctor.specialty='2'"
 				elif case == 4:
 					officeId = json_msg['officeId']
 					query = f"SELECT * FROM doctor WHERE off_id='{officeId}'"
